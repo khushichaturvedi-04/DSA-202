@@ -1,0 +1,70 @@
+---
+title: "DSA 202_Assignment 2"
+author: "Khushi Chaturvedi"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: false
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Objective of the assignment
+
+Create a simple and easy-to-understand visualization using ggplot2 and dplyr for the Olympic Games dataset.
+
+## Tools used - Packages
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+## Data Description
+
+This analysis uses the file olympic_games.csv uploaded to the Cloud. It contains records of Olympic athlete events and medal results.
+
+I look at year and season as grouping variables and use medals to show if a record was awarded. I summarize the data by counting the medal records for each year in the summer and winter Olympics.
+
+The data in this visualization comes from the olympic_games.csv dataset. This dataset includes athlete event records and medal results from the modern Olympic Games. This analysis looks at the Year and Season variables, using Medal to count the number of medal-winning performances for each Olympic year in both the Summer and Winter Games. The visualization displays how the number of medal records has changed over time. It allows for comparison between the Summer and Winter Olympics in different years. Overall, the Summer Olympics consistently feature a higher number of medal records compared to the Winter Olympics. This reflects the greater number of events and more opportunities for participation. The visualization includes clear labels and line types, making it easy to understand the differences between the two seasons without relying only on color.
+
+## Accessibility
+
+This visualization is made to be clear and easy to understand. It has a clear title and labeled axes so viewers can interpret the data without confusion. The differences between Summer and Winter Olympic medal counts are presented with both line types and point shapes. This keeps the chart clear without depending solely on color. The font size and simple layout make it easier to read, and the written explanation helps make sure that everyone can grasp the key trends shown in the graph.
+
+
+## Visualization
+
+```{r}
+# Load the data
+olympics <- read.csv("olympic_games.csv")
+
+# Keep only rows where a medal exists, then count medals by year and season
+medals_by_year <- olympics %>%
+  filter(!is.na(Medal) & Medal != "") %>%
+  group_by(Year, Season) %>%
+  summarise(Medal_Count = n(), .groups = "drop") %>%
+  arrange(Year, Season)
+
+# Line plot using color, line type, and shape to distinguish Summer and Winter
+ggplot(medals_by_year, aes(x = Year, y = Medal_Count, group = Season, color = Season)) +
+  geom_line(aes(linetype = Season), linewidth = 1) +
+  geom_point(aes(shape = Season), size = 2) +
+  scale_color_manual(values = c("Summer" = "#E8851A", "Winter" = "#1A6FB8")) +
+  labs(
+    title = "Olympic medal records over time by season",
+    subtitle = "Counts of medal records per year for Summer and Winter Olympics",
+    x = "Year",
+    y = "Number of medal records",
+    caption = "Data source: olympic_games.csv"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
