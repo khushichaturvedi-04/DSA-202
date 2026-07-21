@@ -74,7 +74,3 @@ Microsoft Excel (PivotCharts and built in accessibility features), R with `ggplo
 1. **Assignment 1:** Open `DSA_202_-_Assignment_1.xlsx` in Excel. All chart formatting and data are self contained in the workbook.
 2. **Assignment 2:** Open `DSA202_603_SP26_A2_kchatur.Rmd` in RStudio, install `tidyverse`, and knit the document to reproduce the line chart.
 3. **Assignment 3 and Final Dashboard:** Open `DSA202_SP26_A3_kchatur.twbx` in Tableau Desktop or Tableau Public to explore the packaged workbook and underlying data sources directly. The final, published version of the dashboard is also available live at the Tableau Public link above.
-
-## Author
-
-Khushi Chaturvedi, North Carolina State University.
